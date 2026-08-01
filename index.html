@@ -1,0 +1,1580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Life OS</title>
+    
+    <!-- Tailwind CSS with Custom Config -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        bg: 'var(--bg)',
+                        card: 'var(--card)',
+                        border: 'var(--border)',
+                        borderStrong: 'var(--border-strong)',
+                        textMain: 'var(--text-main)',
+                        textMuted: 'var(--text-muted)',
+                        primary: 'var(--primary)',
+                        primaryHover: 'var(--primary-hover)',
+                        heatEmpty: 'var(--heat-empty)',
+                        heat1: 'var(--heat-1)',
+                        heat2: 'var(--heat-2)',
+                        heat3: 'var(--heat-3)',
+                        heat4: 'var(--heat-4)',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root, [data-theme="slate"] {
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --border: #f1f5f9;
+            --border-strong: #e2e8f0;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --primary: #0f172a;
+            --primary-hover: #1e293b;
+            --heat-empty: #f1f5f9;
+            --heat-1: #cbd5e1;
+            --heat-2: #64748b;
+            --heat-3: #334155;
+            --heat-4: #0f172a;
+            --snake-0: #059669;
+            --snake-1: #10b981;
+            --snake-2: #34d399;
+            --snake-3: #6ee7b7;
+            --snake-glow: rgba(16, 185, 129, 0.9);
+        }
+
+        [data-theme="classic"] {
+            --bg: #f3f4f6;
+            --card: #ffffff;
+            --border: #e5e7eb;
+            --border-strong: #d1d5db;
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --primary: #65a30d;
+            --primary-hover: #4d7c0f;
+            --heat-empty: #f3f4f6;
+            --heat-1: #d9f99d;
+            --heat-2: #84cc16;
+            --heat-3: #4d7c0f;
+            --heat-4: #14532d;
+            --snake-0: #d97706;
+            --snake-1: #f59e0b;
+            --snake-2: #fbbf24;
+            --snake-3: #fcd34d;
+            --snake-glow: rgba(245, 158, 11, 0.9);
+        }
+
+        [data-theme="dark"] {
+            --bg: #09090b;
+            --card: #18181b;
+            --border: #27272a;
+            --border-strong: #3f3f46;
+            --text-main: #f4f4f5;
+            --text-muted: #a1a1aa;
+            --primary: #3b82f6;
+            --primary-hover: #60a5fa;
+            --heat-empty: #27272a;
+            --heat-1: #1e3a8a;
+            --heat-2: #2563eb;
+            --heat-3: #60a5fa;
+            --heat-4: #bfdbfe;
+            --snake-0: #d97706;
+            --snake-1: #f59e0b;
+            --snake-2: #fbbf24;
+            --snake-3: #fef08a;
+            --snake-glow: rgba(245, 158, 11, 0.95);
+        }
+
+        [data-theme="midnight"] {
+            --bg: #0f172a;
+            --card: #1e293b;
+            --border: #334155;
+            --border-strong: #475569;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --primary: #a855f7;
+            --primary-hover: #c084fc;
+            --heat-empty: #334155;
+            --heat-1: #581c87;
+            --heat-2: #7e22ce;
+            --heat-3: #a855f7;
+            --heat-4: #d8b4fe;
+            --snake-0: #0891b2;
+            --snake-1: #06b6d4;
+            --snake-2: #22d3ee;
+            --snake-3: #67e8f9;
+            --snake-glow: rgba(6, 182, 212, 0.95);
+        }
+
+        [data-theme="sunset"] {
+            --bg: #fffbeb;
+            --card: #ffffff;
+            --border: #fef3c7;
+            --border-strong: #fde68a;
+            --text-main: #451a03;
+            --text-muted: #92400e;
+            --primary: #f43f5e;
+            --primary-hover: #e11d48;
+            --heat-empty: #fef3c7;
+            --heat-1: #fda4af;
+            --heat-2: #fb7185;
+            --heat-3: #f43f5e;
+            --heat-4: #9f1239;
+            --snake-0: #0284c7;
+            --snake-1: #0ea5e9;
+            --snake-2: #38bdf8;
+            --snake-3: #7dd3fc;
+            --snake-glow: rgba(14, 165, 233, 0.9);
+        }
+
+        [data-theme="ocean"] {
+            --bg: #f0fdfa;
+            --card: #ffffff;
+            --border: #ccfbf1;
+            --border-strong: #99f6e4;
+            --text-main: #134e4a;
+            --text-muted: #0f766e;
+            --primary: #0d9488;
+            --primary-hover: #0f766e;
+            --heat-empty: #ccfbf1;
+            --heat-1: #5eead4;
+            --heat-2: #2dd4bf;
+            --heat-3: #0d9488;
+            --heat-4: #115e59;
+            --snake-0: #ea580c;
+            --snake-1: #f97316;
+            --snake-2: #fb923c;
+            --snake-3: #fdba74;
+            --snake-glow: rgba(249, 115, 22, 0.9);
+        }
+
+        [data-theme="forest"] {
+            --bg: #f7fee7;
+            --card: #ffffff;
+            --border: #ecfccb;
+            --border-strong: #d9f99d;
+            --text-main: #14532d;
+            --text-muted: #4d7c0f;
+            --primary: #166534;
+            --primary-hover: #14532d;
+            --heat-empty: #ecfccb;
+            --heat-1: #86efac;
+            --heat-2: #4ade80;
+            --heat-3: #16a34a;
+            --heat-4: #14532d;
+            --snake-0: #7c3aed;
+            --snake-1: #8b5cf6;
+            --snake-2: #a78bfa;
+            --snake-3: #c4b5fd;
+            --snake-glow: rgba(139, 92, 246, 0.9);
+        }
+
+        [data-theme="coffee"] {
+            --bg: #f5f5f4;
+            --card: #ffffff;
+            --border: #e7e5e4;
+            --border-strong: #d6d3d1;
+            --text-main: #292524;
+            --text-muted: #78716c;
+            --primary: #44403c;
+            --primary-hover: #292524;
+            --heat-empty: #e7e5e4;
+            --heat-1: #a8a29e;
+            --heat-2: #78716c;
+            --heat-3: #57534e;
+            --heat-4: #292524;
+            --snake-0: #0891b2;
+            --snake-1: #06b6d4;
+            --snake-2: #22d3ee;
+            --snake-3: #67e8f9;
+            --snake-glow: rgba(6, 182, 212, 0.9);
+        }
+
+        [data-theme="monochrome"] {
+            --bg: #ffffff;
+            --card: #ffffff;
+            --border: #e5e5e5;
+            --border-strong: #000000;
+            --text-main: #000000;
+            --text-muted: #737373;
+            --primary: #000000;
+            --primary-hover: #404040;
+            --heat-empty: #f5f5f5;
+            --heat-1: #d4d4d4;
+            --heat-2: #737373;
+            --heat-3: #404040;
+            --heat-4: #000000;
+            --snake-0: #dc2626;
+            --snake-1: #ef4444;
+            --snake-2: #f87171;
+            --snake-3: #fca5a5;
+            --snake-glow: rgba(239, 68, 68, 0.9);
+        }
+
+        [data-theme="neon"] {
+            --bg: #000000;
+            --card: #111111;
+            --border: #222222;
+            --border-strong: #333333;
+            --text-main: #ffffff;
+            --text-muted: #888888;
+            --primary: #ec4899;
+            --primary-hover: #f472b6;
+            --heat-empty: #222222;
+            --heat-1: #831843;
+            --heat-2: #be185d;
+            --heat-3: #ec4899;
+            --heat-4: #fbcfe8;
+            --snake-0: #16a34a;
+            --snake-1: #22c55e;
+            --snake-2: #4ade80;
+            --snake-3: #86efac;
+            --snake-glow: rgba(34, 197, 94, 0.95);
+        }
+
+        * {
+            transition-property: background-color, border-color, color, fill, stroke;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: 400ms;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+        }
+        
+        .premium-card {
+            background-color: var(--card);
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            border: 1px solid var(--border);
+        }
+
+        .custom-checkbox {
+            appearance: none;
+            background-color: var(--card);
+            margin: 0;
+            font: inherit;
+            color: currentColor;
+            width: 1.25em;
+            height: 1.25em;
+            border: 2px solid var(--border-strong);
+            border-radius: 0.3em;
+            display: grid;
+            place-content: center;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .custom-checkbox::before {
+            content: "";
+            width: 0.7em;
+            height: 0.7em;
+            transform: scale(0);
+            transition: 120ms transform ease-in-out;
+            box-shadow: inset 1em 1em white;
+            background-color: white;
+            transform-origin: center;
+            clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+        }
+
+        .custom-checkbox:checked {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .custom-checkbox:checked::before {
+            transform: scale(1);
+        }
+
+        .grid-scroll::-webkit-scrollbar {
+            height: 6px;
+            width: 6px;
+        }
+        .grid-scroll::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .grid-scroll::-webkit-scrollbar-thumb {
+            background: var(--border-strong);
+            border-radius: 10px;
+        }
+
+        input[type="text"] {
+            background-color: var(--card);
+            color: var(--text-main);
+            border-color: var(--border-strong);
+        }
+
+        /* SVG Donut Ring Transition */
+        .donut-ring {
+            transition: stroke-dashoffset 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+
+        /* Vertical Bar Meter Transition */
+        .vertical-fill {
+            transition: height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Buttery Smooth Heatmap Cells */
+        .heatmap-cell {
+            transition: background-color 0.18s ease, transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.18s ease, border-color 0.18s ease !important;
+        }
+
+        /* Snake Game Segments (Theme-Aware & 100% Bright Opacity Locked) */
+        .snake-seg-0 {
+            background-color: var(--snake-0) !important;
+            border-color: var(--snake-0) !important;
+            box-shadow: 0 0 12px var(--snake-glow);
+            transform: scale(1.18);
+            border-radius: 4px !important;
+            opacity: 1 !important;
+            z-index: 30;
+        }
+        .snake-seg-1 {
+            background-color: var(--snake-1) !important;
+            border-color: var(--snake-1) !important;
+            transform: scale(1.0);
+            border-radius: 3.5px !important;
+            opacity: 1 !important;
+            z-index: 25;
+        }
+        .snake-seg-2 {
+            background-color: var(--snake-2) !important;
+            border-color: var(--snake-2) !important;
+            transform: scale(0.85);
+            border-radius: 3px !important;
+            opacity: 1 !important;
+            z-index: 20;
+        }
+        .snake-seg-3 {
+            background-color: var(--snake-3) !important;
+            border-color: var(--snake-3) !important;
+            transform: scale(0.70);
+            border-radius: 2.5px !important;
+            opacity: 1 !important;
+            z-index: 15;
+        }
+    </style>
+</head>
+<body class="min-h-screen p-4 md:p-8 lg:p-10">
+
+    <!-- Global Fixed Floating Tooltip for Heatmap -->
+    <div id="heatmapTooltip" class="fixed z-[100] hidden px-2.5 py-1.5 bg-primary text-card text-xs font-semibold rounded-md shadow-xl pointer-events-none transition-all duration-75 whitespace-nowrap"></div>
+
+    <div class="max-w-7xl mx-auto space-y-8">
+
+        <!-- HEADER: Title & Top Stats -->
+        <header class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
+            
+            <!-- Month Title & Navigation -->
+            <div class="w-full lg:w-auto flex justify-between items-start">
+                <div>
+                    <h1 class="text-4xl font-bold tracking-tight text-textMain" id="currentMonthDisplay">Loading...</h1>
+                    <div class="flex items-center gap-2 mt-2">
+                        <button onclick="changeMonth(-1)" class="p-1.5 rounded-full bg-card shadow-sm border border-border hover:bg-bg text-textMuted transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
+                        </button>
+                        <p class="text-sm text-textMuted font-medium px-2" id="currentDateSubtitle">Consistency is key</p>
+                        <button onclick="changeMonth(1)" class="p-1.5 rounded-full bg-card shadow-sm border border-border hover:bg-bg text-textMuted transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Theme Selector (Mobile Top Right) -->
+                <div class="lg:hidden">
+                    <select id="themeSelectMobile" onchange="changeTheme(this.value)" class="bg-card text-textMain border border-border rounded-md text-xs p-2 shadow-sm outline-none cursor-pointer">
+                        <option value="slate">Slate (Default)</option>
+                        <option value="classic">Classic Green</option>
+                        <option value="dark">Dark Mode</option>
+                        <option value="midnight">Midnight</option>
+                        <option value="sunset">Sunset</option>
+                        <option value="ocean">Ocean</option>
+                        <option value="forest">Forest</option>
+                        <option value="coffee">Coffee</option>
+                        <option value="monochrome">Monochrome</option>
+                        <option value="neon">Neon</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- KPI Cards & Desktop Theme Selector -->
+            <div class="flex items-center gap-4 w-full lg:w-auto overflow-x-auto pb-2 lg:pb-0">
+                <div class="premium-card p-4 flex-1 min-w-[120px]">
+                    <div class="text-xs font-semibold text-textMuted uppercase tracking-wider mb-1">Active</div>
+                    <div class="text-3xl font-bold text-textMain" id="totalHabitsCount">0</div>
+                </div>
+                
+                <div class="premium-card p-4 flex-1 min-w-[120px]">
+                    <div class="text-xs font-semibold text-textMuted uppercase tracking-wider mb-1">Done</div>
+                    <div class="text-3xl font-bold text-textMain" id="totalCompletedCount">0</div>
+                </div>
+
+                <div class="premium-card p-4 flex-1 min-w-[180px] flex flex-col justify-center">
+                    <div class="flex justify-between text-xs font-semibold text-textMuted uppercase tracking-wider mb-2">
+                        <span>Progress</span>
+                        <span id="progressPercentText" class="text-textMain">0%</span>
+                    </div>
+                    <div class="w-full bg-border rounded-full h-2.5 overflow-hidden">
+                        <div id="mainProgressBar" class="bg-primary h-2.5 rounded-full transition-all duration-500 ease-out" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <!-- Theme Selector (Desktop) -->
+                <div class="hidden lg:block premium-card p-4">
+                    <div class="text-xs font-semibold text-textMuted uppercase tracking-wider mb-1">Theme</div>
+                    <select id="themeSelectDesktop" onchange="changeTheme(this.value)" class="bg-card text-textMain border border-border rounded-md text-sm py-1 px-2 w-full outline-none cursor-pointer">
+                        <option value="slate">Slate</option>
+                        <option value="classic">Classic Green</option>
+                        <option value="dark">Dark Mode</option>
+                        <option value="midnight">Midnight</option>
+                        <option value="sunset">Sunset</option>
+                        <option value="ocean">Ocean</option>
+                        <option value="forest">Forest</option>
+                        <option value="coffee">Coffee</option>
+                        <option value="monochrome">Monochrome</option>
+                        <option value="neon">Neon</option>
+                    </select>
+                </div>
+            </div>
+        </header>
+
+        <!-- MAIN GRID (Dashboard Layout) -->
+        <main class="grid grid-cols-1 xl:grid-cols-4 gap-8">
+            
+            <!-- Left Column: The Tracker -->
+            <div class="xl:col-span-3 premium-card overflow-hidden flex flex-col">
+                <!-- Grid Controls -->
+                <div class="p-5 border-b border-border flex justify-between items-center bg-card">
+                    <h2 class="font-bold text-lg text-textMain">Daily Execution Matrix</h2>
+                    <div class="flex items-center gap-4 text-xs font-medium text-textMuted">
+                        <div class="flex items-center gap-1.5"><div class="w-3 h-3 bg-primary rounded-sm transition-colors"></div> Done</div>
+                        <div class="flex items-center gap-1.5"><div class="w-3 h-3 border-2 border-borderStrong rounded-sm transition-colors"></div> Pending</div>
+                    </div>
+                </div>
+
+                <div class="flex flex-1 min-h-[400px]">
+                    <!-- Sidebar: Habit List -->
+                    <div class="flex-none w-56 border-r border-border bg-bg z-10 flex flex-col transition-colors">
+                        <div class="h-20 border-b border-border flex justify-between items-end pb-3 px-5 bg-card">
+                            <span class="font-semibold text-textMain">Routines</span>
+                            <button onclick="toggleEditMode()" id="editBtn" class="text-xs font-medium text-primary hover:text-primaryHover cursor-pointer transition-colors">
+                                Edit
+                            </button>
+                        </div>
+                        
+                        <div id="habitListContainer" class="flex-1 overflow-y-auto">
+                            <!-- Habits injected by JS -->
+                        </div>
+                        
+                        <!-- Bottom Stats Labels -->
+                        <div class="bg-card border-t border-border">
+                             <div class="h-10 flex items-center px-5 text-xs font-semibold text-textMuted border-b border-border">Daily Progress %</div>
+                             <div class="h-10 flex items-center px-5 text-xs font-semibold text-textMuted border-b border-border">Done</div>
+                             <div class="h-10 flex items-center px-5 text-xs font-semibold text-textMuted">Not Done</div>
+                        </div>
+                    </div>
+
+                    <!-- Right Section: Calendar Grid -->
+                    <div class="flex-1 overflow-x-auto grid-scroll bg-card relative flex flex-col">
+                        <div class="inline-block min-w-full flex-1 flex flex-col">
+                            <!-- Date Headers -->
+                            <div id="dateHeaderContainer" class="h-20 border-b border-border flex bg-card sticky top-0 z-0">
+                                <!-- Dates injected by JS -->
+                            </div>
+
+                            <!-- Checkbox Grid -->
+                            <div id="checkboxGridContainer" class="flex-1">
+                                <!-- Checkboxes injected by JS -->
+                            </div>
+
+                             <!-- Bottom Stats Rows -->
+                             <div class="mt-auto">
+                                 <div id="dailyProgressRow" class="h-10 flex border-t border-b border-border bg-bg transition-colors"></div>
+                                 <div id="dailyDoneRow" class="h-10 flex border-b border-border transition-colors"></div>
+                                 <div id="dailyNotDoneRow" class="h-10 flex transition-colors"></div>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Analytics & Insights -->
+            <div class="xl:col-span-1 space-y-8">
+                
+                <!-- Insights Card -->
+                <div class="premium-card p-6">
+                    <h3 class="font-bold text-lg text-textMain mb-4">Insights</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="text-sm font-medium text-textMuted mb-1">Current Streak</div>
+                            <div class="text-2xl font-bold text-textMain flex items-baseline gap-2">
+                                <span id="currentStreakVal">0</span> <span class="text-sm font-normal text-textMuted">days</span>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="text-sm font-medium text-textMuted mb-1">Completion Rate</div>
+                            <div class="text-2xl font-bold text-textMain flex items-baseline gap-2">
+                                <span id="completionRateVal">0%</span>
+                            </div>
+                        </div>
+                        <div class="pt-4 border-t border-border">
+                             <p class="text-sm text-textMuted italic">"Small disciplines repeated with consistency every day lead to great achievements."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Daily Chart Card -->
+                <div class="premium-card p-6">
+                    <h3 class="font-bold text-sm uppercase tracking-wider text-textMuted mb-4">Daily Trend</h3>
+                    <div class="relative h-48 w-full">
+                        <canvas id="dailyChart"></canvas>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+        <!-- SPREADSHEET OS: Clean Weekly Execution Board -->
+        <section class="premium-card p-6 space-y-6">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-border pb-4">
+                <div>
+                    <h2 class="font-bold text-lg text-textMain">Weekly Execution Board</h2>
+                    <p class="text-xs text-textMuted">Dual Donut Gauges & Vertical Thermometer Bars for daily execution.</p>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="changeWeek(-1)" class="px-2.5 py-1 text-xs font-semibold rounded border border-border bg-card hover:bg-bg text-textMuted transition-colors">&larr; Prev</button>
+                    <button onclick="resetToCurrentWeek()" class="px-2.5 py-1 text-xs font-semibold rounded border border-border bg-card hover:bg-bg text-textMain transition-colors">This Week</button>
+                    <button onclick="changeWeek(1)" class="px-2.5 py-1 text-xs font-semibold rounded border border-border bg-card hover:bg-bg text-textMuted transition-colors">Next &rarr;</button>
+                </div>
+            </div>
+
+            <!-- 7-Day Clean Execution Columns Grid -->
+            <div id="weeklySpreadContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-7 gap-4 min-w-0">
+                <!-- Daily Cards injected by JS -->
+            </div>
+        </section>
+
+        <!-- ADVANCED ANALYTICS: Yearly Heatmap with Play/Stop Snake Button -->
+        <section class="premium-card p-6 flex flex-col">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+                <div>
+                    <h2 class="font-bold text-lg text-textMain">Year in Pixels (<span id="heatmapYear">2026</span>)</h2>
+                    <p class="text-xs text-textMuted">Interactive execution heatmap. Click Play to launch Snake mode.</p>
+                </div>
+                <!-- Modern Play / Stop Button -->
+                <button id="snakeToggleBtn" onclick="toggleSnakeGame()" class="flex items-center gap-2 px-3.5 py-1.5 rounded-lg border border-border bg-card hover:bg-bg text-xs font-semibold text-textMain shadow-sm transition-all duration-300">
+                    <svg id="snakePlayIcon" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    <svg id="snakeStopIcon" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-red-500 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 10a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z" /></svg>
+                    <span id="snakeBtnText">Play Snake</span>
+                </button>
+            </div>
+
+            <div class="overflow-x-auto pb-4 grid-scroll relative w-full">
+                <div class="flex gap-2 min-w-max pr-4">
+                    
+                    <!-- Day Labels Sidebar -->
+                    <div class="flex flex-col gap-1 flex-none pr-3 select-none">
+                        <div class="h-5"></div>
+                        <div class="h-3.5 flex items-center justify-end text-[10px] font-semibold text-textMuted leading-none"></div>
+                        <div class="h-3.5 flex items-center justify-end text-[10px] font-semibold text-textMuted leading-none">Mon</div>
+                        <div class="h-3.5 flex items-center justify-end text-[10px] font-semibold text-textMuted leading-none"></div>
+                        <div class="h-3.5 flex items-center justify-end text-[10px] font-semibold text-textMuted leading-none">Wed</div>
+                        <div class="h-3.5 flex items-center justify-end text-[10px] font-semibold text-textMuted leading-none"></div>
+                        <div class="h-3.5 flex items-center justify-end text-[10px] font-semibold text-textMuted leading-none">Fri</div>
+                        <div class="h-3.5 flex items-center justify-end text-[10px] font-semibold text-textMuted leading-none"></div>
+                    </div>
+                    
+                    <!-- Week Columns Container -->
+                    <div id="heatmapColumns" class="flex gap-1">
+                        <!-- Injected by JS -->
+                    </div>
+
+                </div>
+                
+                <!-- Heatmap Legend -->
+                <div class="flex items-center gap-2 mt-6 text-xs text-textMuted justify-end min-w-max pr-4">
+                    <span>Less</span>
+                    <div class="w-3.5 h-3.5 rounded-[3px] bg-heatEmpty border border-border"></div>
+                    <div class="w-3.5 h-3.5 rounded-[3px] bg-heat1 border border-border"></div>
+                    <div class="w-3.5 h-3.5 rounded-[3px] bg-heat2 border border-border"></div>
+                    <div class="w-3.5 h-3.5 rounded-[3px] bg-heat3 border border-border"></div>
+                    <div class="w-3.5 h-3.5 rounded-[3px] bg-heat4 border border-border"></div>
+                    <span>More</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer & Data Management -->
+        <footer class="flex flex-col md:flex-row justify-between items-center py-8 text-sm text-textMuted border-t border-border gap-4">
+            <p>&copy; Premium Life OS. Locally secured.</p>
+            <div class="flex gap-4">
+                <button onclick="exportData()" class="flex items-center gap-1.5 hover:text-textMain transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                    Export
+                </button>
+                <label class="flex items-center gap-1.5 hover:text-textMain transition-colors cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg>
+                    Import
+                    <input type="file" id="importFile" class="hidden" accept=".json" onchange="importData(event)">
+                </label>
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        // --- Configuration & Data ---
+        const defaultHabits = [
+            { id: 1, name: "Deep Work (2 hrs)", icon: "🧠" },
+            { id: 2, name: "Zone 2 Cardio", icon: "🫀" },
+            { id: 3, name: "Read 20 Pages", icon: "📚" },
+            { id: 4, name: "Plan Tomorrow", icon: "📝" },
+            { id: 5, name: "No Sugar", icon: "🚫" },
+            { id: 6, name: "Review Finances", icon: "📈" }
+        ];
+
+        let currentDate = new Date();
+        let currentYear = currentDate.getFullYear();
+        let currentMonth = currentDate.getMonth(); 
+        const realDate = new Date();
+
+        // Weekly Spread Anchor Date
+        let activeWeekStart = getMonday(new Date());
+
+        // Load data from Storage
+        let progressData = JSON.parse(localStorage.getItem('premiumTrackerData')) || {};
+        let habits = JSON.parse(localStorage.getItem('premiumTrackerList')) || defaultHabits;
+        let dailyTasksData = JSON.parse(localStorage.getItem('premiumTrackerDailyTasks')) || {};
+        let isEditing = false;
+        
+        // Load Theme
+        let currentTheme = localStorage.getItem('premiumTrackerTheme') || 'slate';
+
+        // --- DOM Elements ---
+        const els = {
+            monthDisplay: document.getElementById('currentMonthDisplay'),
+            subtitleDisplay: document.getElementById('currentDateSubtitle'),
+            habitList: document.getElementById('habitListContainer'),
+            dateHeader: document.getElementById('dateHeaderContainer'),
+            grid: document.getElementById('checkboxGridContainer'),
+            totalHabits: document.getElementById('totalHabitsCount'),
+            totalCompleted: document.getElementById('totalCompletedCount'),
+            progressText: document.getElementById('progressPercentText'),
+            progressBar: document.getElementById('mainProgressBar'),
+            dailyProgressRow: document.getElementById('dailyProgressRow'),
+            dailyDoneRow: document.getElementById('dailyDoneRow'),
+            dailyNotDoneRow: document.getElementById('dailyNotDoneRow'),
+            editBtn: document.getElementById('editBtn'),
+            streakVal: document.getElementById('currentStreakVal'),
+            completionRate: document.getElementById('completionRateVal'),
+            heatmapYear: document.getElementById('heatmapYear'),
+            heatmapColumns: document.getElementById('heatmapColumns'),
+            themeSelectD: document.getElementById('themeSelectDesktop'),
+            themeSelectM: document.getElementById('themeSelectMobile'),
+            heatmapTooltip: document.getElementById('heatmapTooltip'),
+            weeklySpread: document.getElementById('weeklySpreadContainer'),
+            snakeToggleBtn: document.getElementById('snakeToggleBtn'),
+            snakePlayIcon: document.getElementById('snakePlayIcon'),
+            snakeStopIcon: document.getElementById('snakeStopIcon'),
+            snakeBtnText: document.getElementById('snakeBtnText')
+        };
+
+        // --- Helpers ---
+        function getMonday(d) {
+            d = new Date(d);
+            const day = d.getDay();
+            const diff = d.getDate() - day + (day === 0 ? -6 : 1);
+            return new Date(d.setDate(diff));
+        }
+
+        const getDaysInMonth = (year, month) => new Date(year, month + 1, 0).getDate();
+        const getDayName = (year, month, day) => new Date(year, month, day).toLocaleDateString('en-US', { weekday: 'short' }).slice(0, 1);
+        const generateKey = (year, month, day, habitId) => `${year}-${month}-${day}-${habitId}`;
+        const generateDateKey = (dateObj) => `${dateObj.getFullYear()}-${dateObj.getMonth()}-${dateObj.getDate()}`;
+
+        // --- Core Logic ---
+        function init() {
+            applyTheme(currentTheme, true);
+            renderHeader();
+            renderHabits();
+            renderGrid();
+            updateStats();
+            initCharts();
+            renderWeeklySpread();
+            renderHeatmap();
+        }
+
+        window.changeTheme = function(themeName) {
+            applyTheme(themeName, false);
+        }
+
+        function applyTheme(themeName, isInit) {
+            document.documentElement.setAttribute('data-theme', themeName);
+            localStorage.setItem('premiumTrackerTheme', themeName);
+            els.themeSelectD.value = themeName;
+            els.themeSelectM.value = themeName;
+
+            if (!isInit) {
+                requestAnimationFrame(() => {
+                    setTimeout(updateChartColors, 50); 
+                });
+            }
+        }
+
+        window.changeMonth = function(offset) {
+            currentDate.setMonth(currentDate.getMonth() + offset);
+            currentYear = currentDate.getFullYear();
+            currentMonth = currentDate.getMonth();
+            
+            renderHeader();
+            renderHabits();
+            renderGrid();
+            updateStats();
+            updateCharts();
+            renderHeatmap(); 
+        }
+
+        function renderHeader() {
+            const options = { month: 'long', year: 'numeric' };
+            els.monthDisplay.textContent = currentDate.toLocaleDateString('en-US', options);
+            
+            const subtitleOptions = { weekday: 'long', month: 'long', day: 'numeric' };
+            els.subtitleDisplay.textContent = "Today: " + realDate.toLocaleDateString('en-US', subtitleOptions);
+            
+            els.totalHabits.textContent = habits.length;
+            els.heatmapYear.textContent = currentYear;
+        }
+
+        window.toggleEditMode = function() {
+            isEditing = !isEditing;
+            if (!isEditing) {
+                saveHabits();
+                renderGrid();
+                updateStats();
+                updateCharts();
+                renderWeeklySpread();
+                renderHeatmap();
+            }
+            renderHabits();
+        }
+
+        window.updateHabitField = function(index, field, value) {
+            habits[index][field] = value;
+            saveHabits();
+        }
+
+        window.deleteHabit = function(index) {
+            habits.splice(index, 1);
+            saveHabits();
+            renderHabits();
+            renderGrid();
+            updateStats();
+            updateCharts();
+            renderWeeklySpread();
+            renderHeatmap();
+        }
+
+        window.addNewHabit = function() {
+            const newId = Date.now();
+            habits.push({ id: newId, name: "New Routine", icon: "✨" });
+            saveHabits();
+            renderHabits();
+            renderGrid();
+            updateStats();
+            updateCharts();
+            renderWeeklySpread();
+            renderHeatmap();
+        }
+
+        function renderHabits() {
+            if (isEditing) {
+                els.habitList.innerHTML = habits.map((habit, index) => `
+                    <div class="h-12 flex items-center px-3 border-b border-border gap-2 bg-card">
+                        <input type="text" value="${habit.icon}" class="w-8 h-8 text-center border rounded-md text-sm" onchange="updateHabitField(${index}, 'icon', this.value)">
+                        <input type="text" value="${habit.name}" class="flex-1 h-8 px-2 border rounded-md text-sm font-medium" onchange="updateHabitField(${index}, 'name', this.value)">
+                        <button type="button" onclick="deleteHabit(${index})" class="text-textMuted hover:text-red-500 px-1 font-bold">✕</button>
+                    </div>
+                `).join('') + `
+                    <div class="h-12 flex items-center justify-center bg-bg cursor-pointer hover:bg-border text-primary font-medium text-sm transition-colors" onclick="addNewHabit()">
+                        + Add Routine
+                    </div>
+                `;
+                els.editBtn.textContent = "Done";
+                els.editBtn.classList.add("font-bold");
+            } else {
+                els.habitList.innerHTML = habits.map(habit => `
+                    <div class="h-12 flex items-center px-5 text-sm font-medium text-textMain border-b border-border bg-card truncate" title="${habit.name}">
+                        <span class="mr-3 text-lg">${habit.icon}</span>
+                        ${habit.name}
+                    </div>
+                `).join('');
+                els.editBtn.textContent = "Edit";
+                els.editBtn.classList.remove("font-bold");
+            }
+        }
+
+        function saveHabits() {
+            localStorage.setItem('premiumTrackerList', JSON.stringify(habits));
+            renderHeader();
+        }
+
+        function renderGrid() {
+            const daysInMonth = getDaysInMonth(currentYear, currentMonth);
+            const isViewingCurrentRealMonth = currentYear === realDate.getFullYear() && currentMonth === realDate.getMonth();
+            const todayDay = realDate.getDate();
+
+            let headerHTML = '';
+            for (let d = 1; d <= daysInMonth; d++) {
+                const dayName = getDayName(currentYear, currentMonth, d);
+                const isWeekend = new Date(currentYear, currentMonth, d).getDay() === 0 || new Date(currentYear, currentMonth, d).getDay() === 6;
+                const isToday = isViewingCurrentRealMonth && d === todayDay; 
+                
+                let bgClass = isWeekend ? 'bg-bg' : 'bg-card';
+                let textClass = isWeekend ? 'text-textMuted opacity-70' : 'text-textMuted';
+                let borderClass = 'border-r border-border';
+
+                if (isToday) {
+                    bgClass = 'bg-primary';
+                    textClass = 'text-card';
+                    borderClass = 'border-x-2 border-primary z-10 rounded-t-md';
+                }
+                
+                headerHTML += `
+                    <div class="flex-none w-12 ${borderClass} flex flex-col items-center justify-center pt-2 pb-1 ${bgClass} transition-colors">
+                        <span class="text-[10px] uppercase font-bold tracking-wider ${textClass} mb-1 opacity-80">${dayName}</span>
+                        <span class="text-sm font-bold ${textClass}">${d}</span>
+                    </div>
+                `;
+            }
+            els.dateHeader.innerHTML = headerHTML;
+
+            let gridHTML = '';
+            habits.forEach(habit => {
+                gridHTML += `<div class="flex h-12 border-b border-border">`; 
+                for (let d = 1; d <= daysInMonth; d++) {
+                    const key = generateKey(currentYear, currentMonth, d, habit.id);
+                    const isChecked = progressData[key] ? 'checked' : '';
+                    const isWeekend = new Date(currentYear, currentMonth, d).getDay() === 0 || new Date(currentYear, currentMonth, d).getDay() === 6;
+                    const isToday = isViewingCurrentRealMonth && d === todayDay;
+
+                    let bgClass = isWeekend ? 'bg-bg' : 'bg-card';
+                    let borderClass = 'border-r border-border';
+
+                    if (isToday) {
+                        bgClass = 'bg-bg';
+                        borderClass = 'border-x-2 border-primary opacity-50';
+                    }
+
+                    gridHTML += `
+                        <div class="flex-none w-12 ${borderClass} flex items-center justify-center ${bgClass} transition-colors">
+                            <input type="checkbox" 
+                                class="custom-checkbox" 
+                                data-key="${key}" 
+                                ${isChecked}
+                                onchange="toggleHabit(this)">
+                        </div>
+                    `;
+                }
+                gridHTML += `</div>`;
+            });
+            els.grid.innerHTML = gridHTML;
+        }
+
+        window.toggleHabit = function(checkbox) {
+            const key = checkbox.dataset.key;
+            if (checkbox.checked) {
+                progressData[key] = true;
+            } else {
+                delete progressData[key];
+            }
+            saveData();
+            updateStats();
+            updateCharts();
+            renderHabits();
+            renderWeeklySpread();
+            renderHeatmap();
+        };
+
+        function saveData() {
+            localStorage.setItem('premiumTrackerData', JSON.stringify(progressData));
+        }
+
+        function calculateStreak() {
+            let streak = 0;
+            let checkDate = new Date(realDate.getFullYear(), realDate.getMonth(), realDate.getDate());
+
+            while(true) {
+                let dayCompletedSomething = false;
+                const y = checkDate.getFullYear();
+                const m = checkDate.getMonth();
+                const d = checkDate.getDate();
+
+                for (let i = 0; i < habits.length; i++) {
+                    const key = generateKey(y, m, d, habits[i].id);
+                    if (progressData[key]) {
+                        dayCompletedSomething = true;
+                        break;
+                    }
+                }
+
+                if (dayCompletedSomething) {
+                    streak++;
+                    checkDate.setDate(checkDate.getDate() - 1);
+                } else {
+                    if (streak === 0 && checkDate.getTime() === new Date(realDate.getFullYear(), realDate.getMonth(), realDate.getDate()).getTime()) {
+                        checkDate.setDate(checkDate.getDate() - 1);
+                    } else {
+                        break; 
+                    }
+                }
+            }
+            return streak;
+        }
+
+        function updateStats() {
+            const daysInMonth = getDaysInMonth(currentYear, currentMonth);
+            const totalPotential = habits.length * daysInMonth;
+            
+            let currentMonthCompleted = 0;
+            let dailyCounts = new Array(daysInMonth + 1).fill(0); 
+            
+            let totalRecordedCompleted = Object.keys(progressData).length;
+            let compRate = totalRecordedCompleted === 0 ? 0 : Math.round((totalRecordedCompleted / (habits.length * 30)) * 100); 
+            
+            els.streakVal.textContent = calculateStreak();
+            els.completionRate.textContent = `${Math.min(compRate, 100)}%`;
+
+            Object.keys(progressData).forEach(key => {
+                const [y, m, d, hId] = key.split('-');
+                if (parseInt(y) === currentYear && parseInt(m) === currentMonth && habits.some(h => h.id == hId)) {
+                    currentMonthCompleted++;
+                    dailyCounts[parseInt(d)]++;
+                }
+            });
+
+            els.totalCompleted.textContent = currentMonthCompleted;
+            const percentage = totalPotential === 0 ? 0 : Math.round((currentMonthCompleted / totalPotential) * 100);
+            els.progressText.textContent = `${percentage}%`;
+            els.progressBar.style.width = `${percentage}%`;
+
+            let progressRowHTML = '';
+            let doneRowHTML = '';
+            let notDoneRowHTML = '';
+
+            for (let d = 1; d <= daysInMonth; d++) {
+                const doneCount = dailyCounts[d];
+                const notDoneCount = habits.length - doneCount;
+                const dailyPercent = habits.length === 0 ? 0 : Math.round((doneCount / habits.length) * 100);
+                const isWeekend = new Date(currentYear, currentMonth, d).getDay() === 0 || new Date(currentYear, currentMonth, d).getDay() === 6;
+                const bgClass = isWeekend ? 'bg-bg' : '';
+
+                progressRowHTML += `
+                    <div class="flex-none w-12 border-r border-border flex items-center justify-center text-[10px] text-textMuted font-bold ${bgClass} transition-colors">
+                        ${dailyPercent}%
+                    </div>`;
+                
+                doneRowHTML += `
+                     <div class="flex-none w-12 border-r border-border flex items-center justify-center text-xs text-textMain font-bold ${bgClass} transition-colors">
+                        ${doneCount}
+                    </div>`;
+
+                notDoneRowHTML += `
+                     <div class="flex-none w-12 border-r border-border flex items-center justify-center text-xs text-textMuted opacity-50 font-medium ${bgClass} transition-colors">
+                        ${notDoneCount}
+                    </div>`;
+            }
+
+            els.dailyProgressRow.innerHTML = progressRowHTML;
+            els.dailyDoneRow.innerHTML = doneRowHTML;
+            els.dailyNotDoneRow.innerHTML = notDoneRowHTML;
+        }
+
+        // --- CLEAN WEEKLY EXECUTION BOARD ---
+        window.changeWeek = function(offset) {
+            activeWeekStart.setDate(activeWeekStart.getDate() + (offset * 7));
+            renderWeeklySpread();
+        };
+
+        window.resetToCurrentWeek = function() {
+            activeWeekStart = getMonday(new Date());
+            renderWeeklySpread();
+        };
+
+        window.addDailyTask = function(dateKey) {
+            const inputEl = document.getElementById(`input-task-${dateKey}`);
+            const val = inputEl.value.trim();
+            if (!val) return;
+
+            if (!dailyTasksData[dateKey]) dailyTasksData[dateKey] = [];
+            dailyTasksData[dateKey].push({ id: Date.now(), text: val, done: false });
+            localStorage.setItem('premiumTrackerDailyTasks', JSON.stringify(dailyTasksData));
+            inputEl.value = '';
+            renderWeeklySpread();
+        };
+
+        window.toggleDailyTask = function(dateKey, taskId) {
+            if (!dailyTasksData[dateKey]) return;
+            const task = dailyTasksData[dateKey].find(t => t.id === taskId);
+            if (task) {
+                task.done = !task.done;
+                localStorage.setItem('premiumTrackerDailyTasks', JSON.stringify(dailyTasksData));
+                renderWeeklySpread();
+            }
+        };
+
+        window.deleteDailyTask = function(dateKey, taskId) {
+            if (!dailyTasksData[dateKey]) return;
+            dailyTasksData[dateKey] = dailyTasksData[dateKey].filter(t => t.id !== taskId);
+            localStorage.setItem('premiumTrackerDailyTasks', JSON.stringify(dailyTasksData));
+            renderWeeklySpread();
+        };
+
+        function renderWeeklySpread() {
+            let cardsHTML = '';
+            const style = getComputedStyle(document.documentElement);
+            const primaryColor = style.getPropertyValue('--primary').trim() || '#0f172a';
+            const borderStrong = style.getPropertyValue('--border-strong').trim() || '#e2e8f0';
+
+            for (let i = 0; i < 7; i++) {
+                const dayDate = new Date(activeWeekStart);
+                dayDate.setDate(dayDate.getDate() + i);
+
+                const y = dayDate.getFullYear();
+                const m = dayDate.getMonth();
+                const d = dayDate.getDate();
+                const dateKey = generateDateKey(dayDate);
+
+                const dayNameLong = dayDate.toLocaleDateString('en-US', { weekday: 'long' });
+                const dateString = dayDate.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' }).replace(/\//g, '.');
+
+                // Routine Progress Calculations
+                let completedRoutines = 0;
+                habits.forEach(h => {
+                    if (progressData[generateKey(y, m, d, h.id)]) completedRoutines++;
+                });
+                const routinePct = habits.length === 0 ? 0 : Math.round((completedRoutines / habits.length) * 100);
+
+                // SVG Donut Ring Calculations
+                const radius = 30;
+                const circumference = 2 * Math.PI * radius;
+                const dashOffset = circumference - (routinePct / 100) * circumference;
+
+                // Daily Tasks
+                const tasks = dailyTasksData[dateKey] || [];
+                const completedTasks = tasks.filter(t => t.done).length;
+
+                const isToday = dayDate.toDateString() === realDate.toDateString();
+                const borderHighlight = isToday ? 'border-2 border-primary shadow-md' : 'border border-border';
+
+                cardsHTML += `
+                    <div class="bg-card rounded-xl p-4 flex flex-col justify-between space-y-4 ${borderHighlight} transition-all min-w-0 overflow-hidden">
+                        <!-- Top Day Banner -->
+                        <div class="flex items-center justify-between border-b border-border pb-2.5">
+                            <div class="truncate pr-1">
+                                <div class="text-xs font-bold uppercase tracking-wider text-textMain truncate">${dayNameLong}</div>
+                                <div class="text-[11px] font-semibold text-textMuted">${dateString}</div>
+                            </div>
+                            <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-bg text-textMuted border border-border flex-none">
+                                ${completedRoutines}/${habits.length}
+                            </span>
+                        </div>
+
+                        <!-- Dual Visual Meters: Donut Gauge + Vertical Thermometer -->
+                        <div class="flex items-center justify-center gap-4 py-2">
+                            <!-- Circular Donut Ring -->
+                            <div class="relative w-24 h-24 flex items-center justify-center flex-none">
+                                <svg class="w-full h-full" viewBox="0 0 100 100">
+                                    <circle cx="50" cy="50" r="${radius}" stroke="${borderStrong}" stroke-width="8" fill="transparent"></circle>
+                                    <circle class="donut-ring" cx="50" cy="50" r="${radius}" 
+                                            stroke="${primaryColor}" stroke-width="8" stroke-linecap="round" fill="transparent"
+                                            style="stroke-dasharray: ${circumference}; stroke-dashoffset: ${dashOffset};">
+                                    </circle>
+                                </svg>
+                                <div class="absolute flex flex-col items-center">
+                                    <span class="text-lg font-bold text-textMain">${routinePct}%</span>
+                                    <span class="text-[8px] font-semibold uppercase tracking-wider text-textMuted">Done</span>
+                                </div>
+                            </div>
+
+                            <!-- Vertical Thermometer Fill Meter -->
+                            <div class="h-20 w-3.5 bg-bg border border-border rounded-full flex items-end p-0.5 overflow-hidden flex-none shadow-inner" title="${routinePct}% Completed">
+                                <div class="w-full bg-primary rounded-full vertical-fill" style="height: ${routinePct}%;"></div>
+                            </div>
+                        </div>
+
+                        <!-- Action Checklist / To-Dos -->
+                        <div class="space-y-2.5 pt-1 border-t border-border min-w-0">
+                            <div class="flex justify-between items-center text-[11px] font-bold text-textMain">
+                                <span>Action Items</span>
+                                <span class="text-[10px] font-semibold text-textMuted">${completedTasks}/${tasks.length}</span>
+                            </div>
+                            
+                            <div class="space-y-1.5 max-h-36 overflow-y-auto pr-1">
+                                ${tasks.map(task => `
+                                    <div class="flex items-center justify-between text-xs group py-0.5">
+                                        <label class="flex items-center gap-2 cursor-pointer truncate pr-1">
+                                            <input type="checkbox" ${task.done ? 'checked' : ''} onchange="toggleDailyTask('${dateKey}', ${task.id})" class="rounded border-borderStrong text-primary focus:ring-0 flex-none">
+                                            <span class="truncate ${task.done ? 'line-through text-textMuted' : 'text-textMain'}">${task.text}</span>
+                                        </label>
+                                        <button onclick="deleteDailyTask('${dateKey}', ${task.id})" class="opacity-0 group-hover:opacity-100 text-textMuted hover:text-red-500 text-[11px] font-bold px-1 transition-opacity flex-none">&times;</button>
+                                    </div>
+                                `).join('')}
+                            </div>
+
+                            <!-- Fixed Task Input Bar -->
+                            <div class="flex items-center gap-1.5 pt-1 w-full">
+                                <input type="text" id="input-task-${dateKey}" placeholder="Add task..." 
+                                       onkeydown="if(event.key==='Enter') addDailyTask('${dateKey}')"
+                                       class="min-w-0 w-full flex-1 text-xs px-2.5 py-1.5 rounded-md border border-border bg-bg text-textMain outline-none focus:border-borderStrong">
+                                <button onclick="addDailyTask('${dateKey}')" class="flex-none w-7 h-7 flex items-center justify-center text-xs font-bold bg-primary text-card rounded-md hover:opacity-90 transition-opacity" title="Add Task">+</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            els.weeklySpread.innerHTML = cardsHTML;
+        }
+
+        // --- YEAR IN PIXELS HEATMAP ---
+        function renderHeatmap() {
+            let columnsHTML = '';
+            const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            
+            const yearStart = new Date(currentYear, 0, 1);
+            const yearEnd = new Date(currentYear, 11, 31);
+            
+            const startDate = new Date(yearStart);
+            startDate.setDate(startDate.getDate() - startDate.getDay());
+            
+            let currentDayPointer = new Date(startDate);
+            let weeks = [];
+            let currentWeek = [];
+
+            while (currentDayPointer <= yearEnd || currentWeek.length > 0) {
+                currentWeek.push(new Date(currentDayPointer));
+                currentDayPointer.setDate(currentDayPointer.getDate() + 1);
+                
+                if (currentWeek.length === 7) {
+                    weeks.push(currentWeek);
+                    currentWeek = [];
+                }
+            }
+
+            let lastMonthRendered = -1;
+
+            weeks.forEach((week, colIndex) => {
+                let monthLabel = '';
+                const weekMonth = colIndex === 0 ? 0 : week[0].getMonth();
+                const weekYear = week[0].getFullYear();
+                
+                if (weekMonth !== lastMonthRendered && (weekYear === currentYear || colIndex === 0)) {
+                    monthLabel = monthNames[weekMonth];
+                    lastMonthRendered = weekMonth;
+                }
+
+                columnsHTML += `<div class="flex flex-col gap-1 flex-none">`;
+                
+                columnsHTML += `
+                    <div class="h-5 relative flex items-end pb-1">
+                        ${monthLabel ? `<span class="text-[11px] font-semibold text-textMuted absolute left-0 bottom-1 select-none leading-none">${monthLabel}</span>` : ''}
+                    </div>
+                `;
+
+                week.forEach((dateObj, dayIndex) => {
+                    if (dateObj.getFullYear() !== currentYear) {
+                        columnsHTML += `<div class="w-3.5 h-3.5 bg-transparent pointer-events-none"></div>`;
+                    } else {
+                        const y = dateObj.getFullYear();
+                        const m = dateObj.getMonth();
+                        const d = dateObj.getDate();
+                        
+                        let completed = 0;
+                        habits.forEach(h => {
+                            if (progressData[generateKey(y, m, d, h.id)]) completed++;
+                        });
+                        
+                        const percent = habits.length === 0 ? 0 : completed / habits.length;
+                        
+                        let colorClass = 'bg-heatEmpty border border-border shadow-sm'; 
+                        let intensity = 0;
+                        if (percent > 0)   { colorClass = 'bg-heat1'; intensity = 1; }
+                        if (percent > 0.3) { colorClass = 'bg-heat2'; intensity = 2; }
+                        if (percent > 0.6) { colorClass = 'bg-heat3'; intensity = 3; }
+                        if (percent > 0.9) { colorClass = 'bg-heat4'; intensity = 4; }
+
+                        const tooltipDate = dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+                        const tooltipText = `${completed} completed on ${tooltipDate}`;
+                        const isCompleted = completed > 0;
+                        
+                        columnsHTML += `
+                            <div class="heatmap-cell w-3.5 h-3.5 rounded-[3px] ${colorClass} cursor-pointer transition-transform hover:scale-110"
+                                 data-col="${colIndex}" 
+                                 data-row="${dayIndex}" 
+                                 data-completed="${isCompleted}"
+                                 data-intensity="${intensity}"
+                                 data-original-class="${colorClass}"
+                                 onmouseenter="showHeatmapTooltip(event, '${tooltipText}')" 
+                                 onmouseleave="hideHeatmapTooltip()">
+                            </div>
+                        `;
+                    }
+                });
+
+                columnsHTML += `</div>`;
+            });
+
+            els.heatmapColumns.innerHTML = columnsHTML;
+        }
+
+        // --- SNAKE GAME ENGINE (ZERO RED TARGETS + HIGH CONTRAST + AUTO RESET) ---
+        let snakeInterval = null;
+        let isSnakeRunning = false;
+        let snakeBody = [];
+        let currentTarget = null;
+        let eatenBoxesCount = 0;
+
+        window.toggleSnakeGame = function() {
+            if (isSnakeRunning) {
+                stopSnakeGame();
+            } else {
+                startSnakeGame();
+            }
+        };
+
+        function startSnakeGame() {
+            const initialCompleted = document.querySelectorAll('.heatmap-cell[data-completed="true"]:not(.snake-eaten)');
+            if (initialCompleted.length === 0) {
+                alert("Add some completed habits on the heatmap first to play Snake!");
+                return;
+            }
+
+            isSnakeRunning = true;
+            eatenBoxesCount = 0;
+            els.snakePlayIcon.classList.add('hidden');
+            els.snakeStopIcon.classList.remove('hidden');
+            els.snakeBtnText.textContent = 'Stop Snake (Eaten: 0)';
+
+            snakeBody = [
+                { col: 0, row: 3 },
+                { col: 0, row: 2 },
+                { col: 0, row: 1 },
+                { col: 0, row: 0 }
+            ];
+            pickNextFoodTarget();
+
+            snakeInterval = setInterval(snakeStep, 190);
+        }
+
+        function stopSnakeGame() {
+            isSnakeRunning = false;
+            if (snakeInterval) clearInterval(snakeInterval);
+            snakeInterval = null;
+
+            els.snakePlayIcon.classList.remove('hidden');
+            els.snakeStopIcon.classList.add('hidden');
+            els.snakeBtnText.textContent = 'Play Snake';
+
+            renderHeatmap();
+        }
+
+        function pickNextFoodTarget() {
+            const completedCells = Array.from(document.querySelectorAll('.heatmap-cell[data-completed="true"]:not(.snake-eaten)'));
+            if (completedCells.length === 0) {
+                if (snakeInterval) clearInterval(snakeInterval);
+                snakeInterval = null;
+                setTimeout(() => {
+                    stopSnakeGame();
+                }, 500);
+                return;
+            }
+
+            // Pick a random remaining completed square without ANY visual target indicator
+            const randomIndex = Math.floor(Math.random() * completedCells.length);
+            const cell = completedCells[randomIndex];
+            const col = parseInt(cell.getAttribute('data-col'));
+            const row = parseInt(cell.getAttribute('data-row'));
+            currentTarget = { el: cell, col, row };
+        }
+
+        function snakeStep() {
+            if (!currentTarget) {
+                pickNextFoodTarget();
+                if (!currentTarget) return;
+            }
+
+            const head = snakeBody[0];
+            let nextCol = head.col;
+            let nextRow = head.row;
+            const colDiff = currentTarget.col - head.col;
+            const rowDiff = currentTarget.row - head.row;
+
+            if (colDiff !== 0 && rowDiff !== 0) {
+                if (Math.random() < 0.5) {
+                    nextCol += Math.sign(colDiff);
+                } else {
+                    nextRow += Math.sign(rowDiff);
+                }
+            } else if (colDiff !== 0) {
+                nextCol += Math.sign(colDiff);
+            } else if (rowDiff !== 0) {
+                nextRow += Math.sign(rowDiff);
+            }
+
+            snakeBody.unshift({ col: nextCol, row: nextRow });
+
+            while (snakeBody.length > 4) {
+                snakeBody.pop();
+            }
+
+            // Check if the snake head landed on ANY completed cell and eat it immediately
+            const touchedCell = document.querySelector(`.heatmap-cell[data-col="${nextCol}"][data-row="${nextRow}"]`);
+            if (touchedCell && touchedCell.getAttribute('data-completed') === 'true' && !touchedCell.classList.contains('snake-eaten')) {
+                eatenBoxesCount++;
+                els.snakeBtnText.textContent = `Stop Snake (Eaten: ${eatenBoxesCount})`;
+                touchedCell.classList.add('snake-eaten');
+                touchedCell.setAttribute('data-completed', 'false');
+                
+                // Instantly remove color so eaten box turns into a faded empty cell
+                touchedCell.classList.remove('bg-heat1', 'bg-heat2', 'bg-heat3', 'bg-heat4');
+                touchedCell.classList.add('bg-heatEmpty');
+                touchedCell.style.opacity = '0.25';
+
+                if (currentTarget && currentTarget.el === touchedCell) {
+                    currentTarget = null;
+                    pickNextFoodTarget();
+                }
+            }
+
+            drawSnake();
+        }
+
+        function drawSnake() {
+            // 1. Reset cells and restore opacity to 1 for all normal squares
+            document.querySelectorAll('.snake-seg-0, .snake-seg-1, .snake-seg-2, .snake-seg-3').forEach(el => {
+                el.classList.remove('snake-seg-0', 'snake-seg-1', 'snake-seg-2', 'snake-seg-3');
+                if (el.classList.contains('snake-eaten')) {
+                    el.classList.remove('bg-heat1', 'bg-heat2', 'bg-heat3', 'bg-heat4');
+                    el.classList.add('bg-heatEmpty');
+                    el.style.opacity = '0.25';
+                } else {
+                    el.style.opacity = '1';
+                }
+            });
+
+            // 2. Draw active snake segments and LOCK opacity to 1 so snake is always 100% solid & bright
+            snakeBody.forEach((seg, index) => {
+                const cell = document.querySelector(`.heatmap-cell[data-col="${seg.col}"][data-row="${seg.row}"]`);
+                if (cell && index < 4) {
+                    cell.classList.add(`snake-seg-${index}`);
+                    cell.style.opacity = '1';
+                }
+            });
+        }
+
+        window.showHeatmapTooltip = function(event, text) {
+            if (isSnakeRunning) return;
+            const tooltipEl = els.heatmapTooltip;
+            if (!tooltipEl || !text) return;
+            
+            tooltipEl.textContent = text;
+            tooltipEl.classList.remove('hidden');
+            
+            const rect = event.target.getBoundingClientRect();
+            const tooltipRect = tooltipEl.getBoundingClientRect();
+            
+            let left = rect.left + (rect.width / 2) - (tooltipRect.width / 2);
+            left = Math.max(12, Math.min(window.innerWidth - tooltipRect.width - 12, left));
+            
+            let top = rect.top - tooltipRect.height - 8;
+            if (top < 12) {
+                top = rect.bottom + 8;
+            }
+            
+            tooltipEl.style.left = `${left}px`;
+            tooltipEl.style.top = `${top}px`;
+        };
+
+        window.hideHeatmapTooltip = function() {
+            if (els.heatmapTooltip) {
+                els.heatmapTooltip.classList.add('hidden');
+            }
+        };
+
+        window.addEventListener('scroll', hideHeatmapTooltip, true);
+
+        let dailyChartInstance = null;
+
+        function calculateDailyStats(year, month) {
+            const daysInMonth = getDaysInMonth(year, month);
+            let dailyData = new Array(daysInMonth).fill(0);
+            Object.keys(progressData).forEach(key => {
+                const [y, m, d, hId] = key.split('-');
+                if (parseInt(y) === year && parseInt(m) === month && habits.some(h => h.id == hId)) {
+                    dailyData[parseInt(d) - 1]++;
+                }
+            });
+            return dailyData;
+        }
+
+        function initCharts() {
+            const ctxDaily = document.getElementById('dailyChart').getContext('2d');
+            const daysInMonth = getDaysInMonth(currentYear, currentMonth);
+            const dailyLabels = Array.from({length: daysInMonth}, (_, i) => i + 1);
+
+            Chart.defaults.font.family = "'Inter', sans-serif";
+            
+            const style = getComputedStyle(document.documentElement);
+            const primaryColor = style.getPropertyValue('--primary').trim() || '#0f172a';
+            const textMuted = style.getPropertyValue('--text-muted').trim() || '#64748b';
+            const border = style.getPropertyValue('--border').trim() || '#f1f5f9';
+
+            Chart.defaults.color = textMuted;
+
+            dailyChartInstance = new Chart(ctxDaily, {
+                type: 'bar', 
+                data: {
+                    labels: dailyLabels,
+                    datasets: [{
+                        label: 'Tasks',
+                        data: calculateDailyStats(currentYear, currentMonth),
+                        backgroundColor: primaryColor,
+                        borderRadius: 4,
+                        barPercentage: 0.6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false }, tooltip: { cornerRadius: 8 } },
+                    scales: {
+                        y: { 
+                            beginAtZero: true, 
+                            suggestedMax: habits.length,
+                            grid: { color: border, drawBorder: false }, 
+                            ticks: { stepSize: 1 }
+                        },
+                        x: { 
+                            grid: { display: false, drawBorder: false } 
+                        }
+                    }
+                }
+            });
+        }
+        
+        function updateCharts() {
+            if (!dailyChartInstance) return;
+            const daysInMonth = getDaysInMonth(currentYear, currentMonth);
+            
+            if (dailyChartInstance.data.labels.length !== daysInMonth) {
+                dailyChartInstance.data.labels = Array.from({length: daysInMonth}, (_, i) => i + 1);
+            }
+            
+            dailyChartInstance.data.datasets[0].data = calculateDailyStats(currentYear, currentMonth);
+            dailyChartInstance.options.scales.y.suggestedMax = habits.length;
+            
+            const style = getComputedStyle(document.documentElement);
+            const primaryColor = style.getPropertyValue('--primary').trim();
+            dailyChartInstance.data.datasets[0].backgroundColor = primaryColor;
+            
+            dailyChartInstance.update();
+        }
+
+        function updateChartColors() {
+            if (!dailyChartInstance) return;
+            const style = getComputedStyle(document.documentElement);
+            const primaryColor = style.getPropertyValue('--primary').trim();
+            const textMuted = style.getPropertyValue('--text-muted').trim();
+            const border = style.getPropertyValue('--border-strong').trim(); 
+
+            Chart.defaults.color = textMuted;
+            
+            dailyChartInstance.data.datasets[0].backgroundColor = primaryColor;
+            
+            dailyChartInstance.options.scales.y.grid.color = border;
+            dailyChartInstance.options.scales.x.ticks.color = textMuted;
+            dailyChartInstance.options.scales.y.ticks.color = textMuted;
+            
+            dailyChartInstance.update({
+                duration: 400,
+                easing: 'easeOutQuart'
+            });
+
+            renderWeeklySpread();
+        }
+
+        // --- BLOB EXPORT & BOM-STRIPPED IMPORT ---
+        window.exportData = function() {
+            const dataToExport = {
+                habits: habits,
+                progress: progressData,
+                dailyTasks: dailyTasksData
+            };
+            const blob = new Blob([JSON.stringify(dataToExport, null, 2)], { type: "application/json" });
+            const url = URL.createObjectURL(blob);
+            const downloadAnchorNode = document.createElement('a');
+            downloadAnchorNode.setAttribute("href", url);
+            downloadAnchorNode.setAttribute("download", "life_os_backup.json");
+            document.body.appendChild(downloadAnchorNode); 
+            downloadAnchorNode.click();
+            downloadAnchorNode.remove();
+            URL.revokeObjectURL(url);
+        }
+
+        window.importData = function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        const cleanText = e.target.result.replace(/^\uFEFF/, '').trim();
+                        const importedData = JSON.parse(cleanText);
+                        
+                        if(importedData.habits && importedData.progress) {
+                            habits = importedData.habits;
+                            progressData = importedData.progress;
+                            dailyTasksData = importedData.dailyTasks || {};
+                            
+                            saveHabits();
+                            saveData();
+                            localStorage.setItem('premiumTrackerDailyTasks', JSON.stringify(dailyTasksData));
+                            
+                            init(); 
+                            alert("Data imported successfully!");
+                        } else {
+                            alert("Invalid backup file format.");
+                        }
+                    } catch (error) {
+                        console.error("JSON Parse Error:", error);
+                        alert("Error parsing backup file.");
+                    }
+                };
+                reader.readAsText(file);
+                event.target.value = '';
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
