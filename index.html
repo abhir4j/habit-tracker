@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Life OS</title>
+    <title>Xecute OS</title>
     
     <!-- Tailwind CSS with Custom Config -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -624,20 +624,17 @@
             </div>
         </section>
 
-        <!-- Footer & Data Management -->
-        <footer class="flex flex-col md:flex-row justify-between items-center py-8 text-sm text-textMuted border-t border-border gap-4">
-            <p>&copy; Premium Life OS. Locally secured.</p>
-            <div class="flex gap-4">
-                <button onclick="exportData()" class="flex items-center gap-1.5 hover:text-textMain transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
-                    Export
-                </button>
-                <label class="flex items-center gap-1.5 hover:text-textMain transition-colors cursor-pointer">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg>
-                    Import
-                    <input type="file" id="importFile" class="hidden" accept=".json" onchange="importData(event)">
-                </label>
+        <!-- Minimal Footer with Made by Abhiraj & Instagram Link -->
+        <footer class="flex justify-between items-center py-8 text-sm text-textMuted border-t border-border">
+            <div class="flex items-center gap-2">
+                <span>Made by <strong class="text-textMain font-semibold">Abhiraj</strong></span>
+                <a href="https://instagram.com/ar4mbh/" target="_blank" rel="noopener noreferrer" class="text-textMuted hover:text-pink-500 transition-colors" title="Instagram Profile">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 1.76-6.98 6.278-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 1.76 6.78 6.278 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-1.758 6.979-6.28.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-1.778-6.78-6.279-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
+                </a>
             </div>
+            <p>&copy; Xecute OS. Locally secured.</p>
         </footer>
 
     </div>
@@ -1247,7 +1244,7 @@
             els.heatmapColumns.innerHTML = columnsHTML;
         }
 
-        // --- SNAKE GAME ENGINE (ZERO RED TARGETS + HIGH CONTRAST + AUTO RESET) ---
+        // --- SNAKE GAME ENGINE ---
         let snakeInterval = null;
         let isSnakeRunning = false;
         let snakeBody = [];
@@ -1309,7 +1306,6 @@
                 return;
             }
 
-            // Pick a random remaining completed square without ANY visual target indicator
             const randomIndex = Math.floor(Math.random() * completedCells.length);
             const cell = completedCells[randomIndex];
             const col = parseInt(cell.getAttribute('data-col'));
@@ -1347,7 +1343,6 @@
                 snakeBody.pop();
             }
 
-            // Check if the snake head landed on ANY completed cell and eat it immediately
             const touchedCell = document.querySelector(`.heatmap-cell[data-col="${nextCol}"][data-row="${nextRow}"]`);
             if (touchedCell && touchedCell.getAttribute('data-completed') === 'true' && !touchedCell.classList.contains('snake-eaten')) {
                 eatenBoxesCount++;
@@ -1355,7 +1350,6 @@
                 touchedCell.classList.add('snake-eaten');
                 touchedCell.setAttribute('data-completed', 'false');
                 
-                // Instantly remove color so eaten box turns into a faded empty cell
                 touchedCell.classList.remove('bg-heat1', 'bg-heat2', 'bg-heat3', 'bg-heat4');
                 touchedCell.classList.add('bg-heatEmpty');
                 touchedCell.style.opacity = '0.25';
@@ -1370,7 +1364,6 @@
         }
 
         function drawSnake() {
-            // 1. Reset cells and restore opacity to 1 for all normal squares
             document.querySelectorAll('.snake-seg-0, .snake-seg-1, .snake-seg-2, .snake-seg-3').forEach(el => {
                 el.classList.remove('snake-seg-0', 'snake-seg-1', 'snake-seg-2', 'snake-seg-3');
                 if (el.classList.contains('snake-eaten')) {
@@ -1382,7 +1375,6 @@
                 }
             });
 
-            // 2. Draw active snake segments and LOCK opacity to 1 so snake is always 100% solid & bright
             snakeBody.forEach((seg, index) => {
                 const cell = document.querySelector(`.heatmap-cell[data-col="${seg.col}"][data-row="${seg.row}"]`);
                 if (cell && index < 4) {
@@ -1521,57 +1513,6 @@
             });
 
             renderWeeklySpread();
-        }
-
-        // --- BLOB EXPORT & BOM-STRIPPED IMPORT ---
-        window.exportData = function() {
-            const dataToExport = {
-                habits: habits,
-                progress: progressData,
-                dailyTasks: dailyTasksData
-            };
-            const blob = new Blob([JSON.stringify(dataToExport, null, 2)], { type: "application/json" });
-            const url = URL.createObjectURL(blob);
-            const downloadAnchorNode = document.createElement('a');
-            downloadAnchorNode.setAttribute("href", url);
-            downloadAnchorNode.setAttribute("download", "life_os_backup.json");
-            document.body.appendChild(downloadAnchorNode); 
-            downloadAnchorNode.click();
-            downloadAnchorNode.remove();
-            URL.revokeObjectURL(url);
-        }
-
-        window.importData = function(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    try {
-                        const cleanText = e.target.result.replace(/^\uFEFF/, '').trim();
-                        const importedData = JSON.parse(cleanText);
-                        
-                        if(importedData.habits && importedData.progress) {
-                            habits = importedData.habits;
-                            progressData = importedData.progress;
-                            dailyTasksData = importedData.dailyTasks || {};
-                            
-                            saveHabits();
-                            saveData();
-                            localStorage.setItem('premiumTrackerDailyTasks', JSON.stringify(dailyTasksData));
-                            
-                            init(); 
-                            alert("Data imported successfully!");
-                        } else {
-                            alert("Invalid backup file format.");
-                        }
-                    } catch (error) {
-                        console.error("JSON Parse Error:", error);
-                        alert("Error parsing backup file.");
-                    }
-                };
-                reader.readAsText(file);
-                event.target.value = '';
-            }
         }
 
         window.addEventListener('DOMContentLoaded', init);
