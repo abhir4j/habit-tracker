@@ -258,7 +258,7 @@ window.toggleHabit = function(checkbox) {
     updateStats();
     updateCharts();
     renderHabits();
-    renderWeeklySpread();
+    updateWeeklySpreadVisuals();
     renderHeatmap();
 };
 
@@ -430,13 +430,13 @@ function renderWeeklySpread() {
         const borderHighlight = isToday ? 'border-2 border-primary shadow-md' : 'border border-border';
 
         cardsHTML += `
-            <div class="bg-card rounded-xl p-4 flex flex-col justify-between space-y-4 ${borderHighlight} transition-all min-w-0 overflow-hidden">
+            <div class="bg-card rounded-xl p-4 flex flex-col justify-between space-y-4 ${borderHighlight} transition-all min-w-0 overflow-hidden" data-date-key="${dateKey}">
                 <div class="flex items-center justify-between border-b border-border pb-2.5">
                     <div class="truncate pr-1">
                         <div class="text-xs font-bold uppercase tracking-wider text-textMain truncate">${dayNameLong}</div>
                         <div class="text-[11px] font-semibold text-textMuted">${dateString}</div>
                     </div>
-                    <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-bg text-textMuted border border-border flex-none">
+                    <span class="routine-fraction text-[10px] font-bold px-2 py-0.5 rounded bg-bg text-textMuted border border-border flex-none">
                         ${completedRoutines}/${habits.length}
                     </span>
                 </div>
@@ -447,17 +447,18 @@ function renderWeeklySpread() {
                             <circle cx="50" cy="50" r="${radius}" stroke="${borderStrong}" stroke-width="8" fill="transparent"></circle>
                             <circle class="donut-ring" cx="50" cy="50" r="${radius}"
                                 stroke="${primaryColor}" stroke-width="8" stroke-linecap="round" fill="transparent"
-                                style="stroke-dasharray: ${circumference}; stroke-dashoffset: ${dashOffset};">
+                                style="stroke-dasharray: ${circumference}; stroke-dashoffset: ${circumference};"
+                                data-target-offset="${dashOffset}">
                             </circle>
                         </svg>
                         <div class="absolute flex flex-col items-center">
-                            <span class="text-lg font-bold text-textMain">${routinePct}%</span>
+                            <span class="routine-pct text-lg font-bold text-textMain">${routinePct}%</span>
                             <span class="text-[8px] font-semibold uppercase tracking-wider text-textMuted">Done</span>
                         </div>
                     </div>
 
                     <div class="h-20 w-3.5 bg-bg border border-border rounded-full flex items-end p-0.5 overflow-hidden flex-none shadow-inner" title="${routinePct}% Completed">
-                        <div class="w-full bg-primary rounded-full vertical-fill" style="height: ${routinePct}%;"></div>
+                        <div class="vertical-fill w-full bg-primary rounded-full" style="height: 0%;" data-target-height="${routinePct}%"></div>
                     </div>
                 </div>
 
@@ -491,6 +492,54 @@ function renderWeeklySpread() {
     }
 
     els.weeklySpread.innerHTML = cardsHTML;
+
+    requestAnimationFrame(() => {
+        setTimeout(() => {
+            const donuts = els.weeklySpread.querySelectorAll('.donut-ring');
+            donuts.forEach(ring => {
+                ring.style.strokeDashoffset = ring.dataset.targetOffset;
+            });
+            const bars = els.weeklySpread.querySelectorAll('.vertical-fill');
+            bars.forEach(bar => {
+                bar.style.height = bar.dataset.targetHeight;
+            });
+        }, 50);
+    });
+}
+
+function updateWeeklySpreadVisuals() {
+    for (let i = 0; i < 7; i++) {
+        const dayDate = new Date(activeWeekStart);
+        dayDate.setDate(dayDate.getDate() + i);
+
+        const y = dayDate.getFullYear();
+        const m = dayDate.getMonth();
+        const d = dayDate.getDate();
+        const dateKey = generateDateKey(dayDate);
+
+        let completedRoutines = 0;
+        habits.forEach(h => {
+            if (progressData[generateKey(y, m, d, h.id)]) completedRoutines++;
+        });
+        const routinePct = habits.length === 0 ? 0 : Math.round((completedRoutines / habits.length) * 100);
+
+        const radius = 30;
+        const circumference = 2 * Math.PI * radius;
+        const dashOffset = circumference - (routinePct / 100) * circumference;
+
+        const cardEl = els.weeklySpread.querySelector(`[data-date-key="${dateKey}"]`);
+        if (cardEl) {
+            const ring = cardEl.querySelector('.donut-ring');
+            const bar = cardEl.querySelector('.vertical-fill');
+            const fractionText = cardEl.querySelector('.routine-fraction');
+            const pctText = cardEl.querySelector('.routine-pct');
+
+            if (ring) ring.style.strokeDashoffset = dashOffset;
+            if (bar) bar.style.height = `${routinePct}%`;
+            if (fractionText) fractionText.textContent = `${completedRoutines}/${habits.length}`;
+            if (pctText) pctText.textContent = `${routinePct}%`;
+        }
+    }
 }
 
 function renderHeatmap() {
